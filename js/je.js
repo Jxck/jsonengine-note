@@ -23,7 +23,7 @@ var je = {
 	},
 
 
-	GET: function(docType, docId, callback) {
+	GET: function(docType, docId, callback, params) {
 		var url = je.baseURI + docType;
 		if (arguments.length === 3) {
 			url += '/' + docId;
@@ -31,10 +31,12 @@ var je = {
 			callback = docId;
 		}
 
+		if(!params) params = {'sort': '_createdAt.asc'};
+
 		$.ajax({
 			type: 'GET',
 			url: url,
-			data: {'sort': '_createdAt.asc'},
+			data: params,
 			beforeSend: function(xhr) {
 //				log(xhr);
 			},

@@ -1,5 +1,14 @@
 /**
 * TODO: 検索、ソート
+* 
+* scheme of note
+* {
+*   "title":"hogehog",
+*   "detail":"asdfasdf",
+*   "_docId":"e7AKVnagHWmO9QV0mK5qKfRQ1uNWY9S2",
+*   "_updatedAt":1289026769886,
+*   "_createdAt":1289026170648
+* }
 */
 var note = {
     save_note : function(){
@@ -96,7 +105,7 @@ var note = {
                     .text(notes[i].title); // タイトルを表示
 
                 // li 要素作成
-                var li = $('<li>').append(a); // li に 作成した a wo
+                var li = $('<li>').append(a); // li に 作成した a を追加
 
                 // li を #note-list に追加
                 li.appendTo('#note-list');
@@ -104,10 +113,44 @@ var note = {
         });
     },
 
+
+	search : function() {
+		$('#search').bind('click', function() {
+			// キーワードを取得
+			var keyword = $('#keyword').val();
+			var params;
+
+			// キーワードが無かったら
+			if (!keyword) { 
+				alert('input keyword for search!'); 
+			} else {
+				params = { cond : "detail_.eq." + keyword };
+			};
+			
+			je.GET('notes', '', function(notes) {
+				// 初期化
+				$('#note-list').empty();
+				for (var i = 0; i < notes.length; i++) {
+					var a = $('<a>')
+						.attr('href', notes[i]._docId) // リンクを docId に
+						.attr('id', notes[i]._docId) // id に docId を保持
+						.text(notes[i].title); // タイトルを表示
+					
+					// li 要素作成
+					var li = $('<li>').append(a); // li に 作成した a を追加
+					
+					// li を #note-list に追加
+					li.appendTo('#note-list');
+				};
+			}, params );
+		});
+	},
+
     clear_note : function() {
         $('#title').val('');
         $('#detail').val('');
     }
+
 };
 
 $(function() {
@@ -117,6 +160,7 @@ $(function() {
     note.delete_note();
     note.list_note();
     note.show_note();
+	note.search();
 });
 
 
