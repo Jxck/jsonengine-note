@@ -7,6 +7,12 @@ var note = {
             // 保持していた docId を参照する
             var docId = $.data($('#main').get(0), 'docId');
 
+			if(!docId) {
+				// ノートが選ばれていなかったら。
+				alert('choise a note before save!');
+				return false;
+			};
+
             // 保存するデータを取得する
             var updateData = {
                 'title': $('#title').val(),
@@ -25,6 +31,12 @@ var note = {
         $('#delete').click(function() {
             // 保持していた docId を参照する
             var docId = $.data($('#main').get(0), 'docId');
+
+			if(!docId) {
+				// ノートが選ばれていなかったら。
+				alert('choise a note before delete!');
+				return false;
+			};
 
             // docId のデータを削除する。
             je.DELETE('notes', docId, function() {
