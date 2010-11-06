@@ -3,7 +3,7 @@
 * 
 * scheme of note
 * {
-*   "title":"hogehog",
+*   "title_":"hogehog",
 *   "detail":"asdfasdf",
 *   "_docId":"e7AKVnagHWmO9QV0mK5qKfRQ1uNWY9S2",
 *   "_updatedAt":1289026769886,
@@ -24,7 +24,7 @@ var note = {
 
             // 保存するデータを取得する
             var updateData = {
-                'title': $('#title').val(),
+                'title_': $('#title').val(),
                 'detail': $('#detail').val()
             };
 
@@ -58,11 +58,11 @@ var note = {
 
     new_note : function() {
         $('#new').click(function() {
-            je.POST('notes', {'title': 'new note', 'detail': ''},function(note) {
+            je.POST('notes', {'title_': 'new note', 'detail': ''},function(note) {
                 var a = $('<a>')
                     .attr('href', note._docId) // リンクを docId に
                     .attr('id', note._docId) // id に docId を保持
-                    .text(note.title); // タイトルを表示
+                    .text(note.title_); // タイトルを表示
 
                 // li 要素作成
                 var li = $('<li>').append(a); // li に 作成した a wo
@@ -71,7 +71,7 @@ var note = {
                 li.appendTo('#note-list');
 
                 // title, detail を表示
-                $('#title').val(note.title);
+                $('#title').val(note.title_);
                 $('#detail').val(note.detail);
                 // 現在表示している docId を #main に保持しておく
                 $.data($('#main').get(0), 'docId', note._docId);
@@ -84,7 +84,7 @@ var note = {
             // id に保持している docId を元に データを取得
             je.GET('notes', this.id, function(note) {
                 // 表示
-                $('#title').val(note.title);
+                $('#title').val(note.title_);
                 $('#detail').val(note.detail);
 
                 // 現在表示している docId を #main に保持しておく
@@ -102,7 +102,7 @@ var note = {
                 var a = $('<a>')
                     .attr('href', notes[i]._docId) // リンクを docId に
                     .attr('id', notes[i]._docId) // id に docId を保持
-                    .text(notes[i].title); // タイトルを表示
+                    .text(notes[i].title_); // タイトルを表示
 
                 // li 要素作成
                 var li = $('<li>').append(a); // li に 作成した a を追加
@@ -114,7 +114,7 @@ var note = {
     },
 
 
-	search : function() {
+	search_note : function() {
 		$('#search').bind('click', function() {
 			// キーワードを取得
 			var keyword = $('#keyword').val();
@@ -124,7 +124,7 @@ var note = {
 			if (!keyword) { 
 				alert('input keyword for search!'); 
 			} else {
-				params = { cond : "detail_.eq." + keyword };
+				params = { 'cond' : "title_.eq." + keyword };
 			};
 			
 			je.GET('notes', '', function(notes) {
@@ -134,7 +134,7 @@ var note = {
 					var a = $('<a>')
 						.attr('href', notes[i]._docId) // リンクを docId に
 						.attr('id', notes[i]._docId) // id に docId を保持
-						.text(notes[i].title); // タイトルを表示
+						.text(notes[i].title_); // タイトルを表示
 					
 					// li 要素作成
 					var li = $('<li>').append(a); // li に 作成した a を追加
@@ -160,7 +160,7 @@ $(function() {
     note.delete_note();
     note.list_note();
     note.show_note();
-	note.search();
+	note.search_note();
 });
 
 
